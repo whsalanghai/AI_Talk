@@ -1,0 +1,1209 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>지방교육행정기관 소속 센터 현황 및 개선방향</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+  <style>
+    :root {
+      --navy: #1e293b;
+      --teal: #009688;
+      --teal-dark: #00796b;
+      --teal-light: #e6f4f1;
+      --teal-border: #b2dfdb;
+      --muted: #64748b;
+      --card-bg: #f8fafc;
+      --line: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--navy);
+      background: #0f172a;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: keep-all;
+    }
+
+    /* 16:9 슬라이드 */
+    .slide-container {
+      width: 1280px;
+      height: 720px;
+      background: #ffffff;
+      display: none;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    }
+
+    /* 슬라이드 헤더 */
+    .slide-header {
+      padding: 28px 48px 14px 48px;
+      border-bottom: 3px solid var(--teal);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      background: #ffffff;
+    }
+
+    .slide-header .title-group h1 {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .slide-header .title-group h1 .accent {
+      color: var(--teal);
+    }
+
+    .subtitle-meta {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .badge-tag {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--teal-dark);
+      background: var(--teal-light);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--teal-border);
+    }
+
+    .slide-lead {
+      padding: 16px 48px 12px 48px;
+      font-size: 19px;
+      font-weight: 700;
+      color: #334155;
+      letter-spacing: -0.3px;
+    }
+
+    /* 3단 카드 */
+    .columns-3 {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      padding: 4px 48px 28px 48px;
+      min-height: 0;
+    }
+
+    .col-card {
+      border: 1.5px solid var(--line);
+      border-radius: 18px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.05);
+    }
+
+    .col-card-header {
+      background: #f1f5f9;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .num-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--teal-light);
+      color: var(--teal-dark);
+      font-size: 14px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .col-card-header h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.3px;
+    }
+
+    .col-card-body {
+      padding: 18px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    /* 내부 정보 카드 */
+    .sub-box {
+      background: var(--card-bg);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 13px 16px;
+    }
+
+    .sub-box h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+
+    .sub-box p {
+      font-size: 13.5px;
+      color: #475569;
+      line-height: 1.48;
+    }
+
+    /* 실태·쟁점 구분 */
+    .mini-tag {
+      display: inline-block;
+      padding: 2px 6px;
+      margin-right: 3px;
+      border-radius: 5px;
+      vertical-align: 1px;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .mini-tag.actual {
+      background: #e2e8f0;
+      color: #475569;
+    }
+
+    .mini-tag.issue {
+      background: #dff3ef;
+      color: #00695c;
+    }
+
+    /* 정책적 시사점 */
+    .mint-box {
+      background: var(--teal-light);
+      border: 1px solid var(--teal-border);
+      border-radius: 12px;
+      padding: 13px 16px;
+    }
+
+    .mint-box h3 {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #004d40;
+      margin-bottom: 4px;
+    }
+
+    .mint-box p {
+      font-size: 13px;
+      color: #00695c;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+
+    /* 번호가 있는 항목 */
+    .item-row {
+      background: var(--card-bg);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 11px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+    }
+
+    .item-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 3px;
+    }
+
+    .item-desc {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.42;
+    }
+
+    /* 기능 비중 표시 */
+    .bar-track {
+      width: 100%;
+      height: 5px;
+      background: #e2e8f0;
+      border-radius: 99px;
+      margin: 5px 0 6px 0;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--teal);
+      border-radius: 99px;
+    }
+
+    /* 하단 요약 */
+    .bottom-banner {
+      margin: -10px 48px 24px 48px;
+      background: var(--teal-light);
+      border: 1.5px solid var(--teal-border);
+      border-radius: 12px;
+      padding: 12px 24px;
+      text-align: center;
+      font-size: 15.5px;
+      font-weight: 800;
+      color: #004d40;
+    }
+
+    /* 2페이지 텍스트 밀도 조정 */
+    .dense .col-card-body {
+      padding: 12px 16px;
+      gap: 8px;
+    }
+
+    .dense .col-card-body > div[style*="flex-direction:column"] {
+      gap: 7px !important;
+    }
+
+    .dense .sub-box {
+      padding: 10px 12px;
+    }
+
+    .dense .sub-box h3 {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .dense .sub-box p {
+      font-size: 12.5px;
+      line-height: 1.38;
+    }
+
+    .dense .mint-box {
+      padding: 10px 12px;
+    }
+
+    .dense .mint-box h3 {
+      font-size: 13.5px;
+      margin-bottom: 4px;
+    }
+
+    .dense .mint-box p {
+      font-size: 12.5px;
+      line-height: 1.36;
+    }
+
+    /* 우측 하단 슬라이드 조작 */
+    .slide-nav {
+      position: fixed;
+      bottom: 20px;
+      right: 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #475569;
+      z-index: 9999;
+      user-select: none;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid #cbd5e1;
+      padding: 6px 14px;
+      border-radius: 999px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+
+    .slide-nav button {
+      background: none;
+      border: none;
+      color: #334155;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 2px 6px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .slide-nav button:hover {
+      color: var(--teal);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =====================================
+       SLIDE 1 : 센터 현황
+       ===================================== -->
+
+  <div class="slide-container">
+
+    <div class="slide-header">
+      <div class="title-group">
+        <h1>
+          지방교육행정기관 소속
+          <span class="accent">센터</span> 현황
+        </h1>
+        <p class="subtitle-meta">
+          2024년 지방교육행정기관 심층기능진단
+        </p>
+      </div>
+      <span class="badge-tag">01 · 현황 및 기능 진단</span>
+    </div>
+
+    <div class="slide-lead">
+      규모와 주요 기능 : 센터는 어디에 설치되어 있고,
+      누구에게 어떤 서비스를 제공하는가
+    </div>
+
+    <div class="columns-3">
+
+      <!-- 1열 : 센터 규모 -->
+      <div class="col-card">
+
+        <div class="col-card-header">
+          <span class="num-circle">1</span>
+          <h2>센터 규모와 설치 현황</h2>
+        </div>
+
+        <div class="col-card-body">
+
+          <div>
+            <p style="font-size:13.5px;font-weight:600;color:#475569;margin-bottom:2px;">
+              16개 시·도교육청 · 본청·교육지원청·직속기관
+            </p>
+            <p style="font-size:12px;color:#94a3b8;margin-bottom:12px;">
+              ※ 제주 제외
+            </p>
+
+            <div class="sub-box"
+                 style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px;margin-bottom:12px;">
+              <div>
+                <p style="font-size:13px;font-weight:700;color:#64748b;margin-bottom:2px;">
+                  조사된 전체 센터
+                </p>
+                <p style="font-size:12.5px;color:#475569;">
+                  행정기관과 학교의 가교 조직
+                </p>
+              </div>
+
+              <p style="font-size:32px;font-weight:800;color:var(--navy);letter-spacing:-1px;">
+                1,902<span style="font-size:18px;">개</span>
+              </p>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+
+              <div class="sub-box" style="text-align:center;padding:14px 10px;">
+                <p style="font-size:12.5px;color:#475569;line-height:1.35;margin-bottom:6px;">
+                  <b>시 지역</b> 센터 중<br>
+                  교육지원청 설치 비율
+                </p>
+                <p style="font-size:22px;font-weight:800;">
+                  52.3%
+                </p>
+              </div>
+
+              <div class="sub-box"
+                   style="text-align:center;padding:14px 10px;border-color:var(--teal-border);">
+                <p style="font-size:12.5px;color:#475569;line-height:1.35;margin-bottom:6px;">
+                  <b>도 지역</b> 센터 중<br>
+                  교육지원청 설치 비율
+                </p>
+                <p style="font-size:22px;font-weight:800;color:var(--teal-dark);">
+                  89.3%
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="mint-box">
+            <h3>설치 규모는 지역 여건에 따라 차이</h3>
+            <p>
+              단순 센터 수만으로 적정성을 판단하기보다
+              관할 면적과 수요자 접근성을 함께 고려할 필요가 있음
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2열 : 주요 기능 -->
+      <div class="col-card">
+
+        <div class="col-card-header">
+          <span class="num-circle">2</span>
+          <h2>비중이 큰 주요 기능</h2>
+        </div>
+
+        <div class="col-card-body">
+
+          <div style="display:flex;flex-direction:column;gap:10px;">
+
+            <div class="item-row">
+              <span class="num-circle" style="width:22px;height:22px;font-size:12px;">1</span>
+              <div class="item-content">
+                <div style="display:flex;justify-content:space-between;">
+                  <p class="item-title">교육 기능</p>
+                  <b style="color:var(--teal-dark);font-size:14px;">27.6%</b>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:78%;"></div>
+                </div>
+                <p class="item-desc">
+                  진로·진학 · 영재 · 환경 · 체험 · 체육 등
+                </p>
+              </div>
+            </div>
+
+            <div class="item-row">
+              <span class="num-circle" style="width:22px;height:22px;font-size:12px;">2</span>
+              <div class="item-content">
+                <div style="display:flex;justify-content:space-between;">
+                  <p class="item-title">소외계층 지원</p>
+                  <b style="color:var(--teal-dark);font-size:14px;">16.0%</b>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:52%;"></div>
+                </div>
+                <p class="item-desc">
+                  다문화 · 특수 · 탈북 · 농어촌 · 교육복지 등
+                </p>
+              </div>
+            </div>
+
+            <div class="item-row">
+              <span class="num-circle" style="width:22px;height:22px;font-size:12px;">3</span>
+              <div class="item-content">
+                <div style="display:flex;justify-content:space-between;">
+                  <p class="item-title">교수학습 지원</p>
+                  <b style="color:var(--teal-dark);font-size:14px;">12.2%</b>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:40%;"></div>
+                </div>
+                <p class="item-desc">
+                  교수학습 · 방과후 · 기초학력 · 교육과정 등
+                </p>
+              </div>
+            </div>
+
+            <div class="item-row">
+              <span class="num-circle" style="width:22px;height:22px;font-size:12px;">4</span>
+              <div class="item-content">
+                <div style="display:flex;justify-content:space-between;">
+                  <p class="item-title">학생안전</p>
+                  <b style="color:var(--teal-dark);font-size:14px;">10.6%</b>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:34%;"></div>
+                </div>
+                <p class="item-desc">
+                  학생상담 · Wee센터 · 학교급식 · 안전 등
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          <p style="font-size:12.5px;color:#64748b;text-align:center;border-top:1px dashed #cbd5e1;padding-top:4px;">
+            ※ 전체 기능 분류 중 비중이 높은 4개 영역 제시
+          </p>
+
+        </div>
+      </div>
+
+      <!-- 3열 : 주요 이용 대상 -->
+      <div class="col-card">
+
+        <div class="col-card-header">
+          <span class="num-circle">3</span>
+          <h2>주요 이용 대상과 기관별 특성</h2>
+        </div>
+
+        <div class="col-card-body">
+
+          <div style="display:flex;flex-direction:column;gap:12px;">
+
+            <div class="sub-box"
+                 style="padding:18px;border-left:4px solid var(--teal);">
+              <p style="font-size:14px;font-weight:700;color:#475569;margin-bottom:6px;">
+                주 이용 대상은
+                <span style="color:var(--teal-dark);">학생</span>
+              </p>
+              <p style="font-size:36px;font-weight:800;line-height:1;">
+                68.4%
+              </p>
+            </div>
+
+            <div class="sub-box" style="padding:16px;">
+              <h3 style="color:var(--teal-dark);margin-bottom:6px;">
+                본청 · 교육지원청 소속 센터
+              </h3>
+              <p style="margin-bottom:4px;">
+                • 직접적인 <b>교육 기능</b>의 비중이 높음
+              </p>
+              <p>
+                • 특히 교육지원청 센터는
+                <b>학생 대상 서비스</b>가 중심
+              </p>
+            </div>
+
+            <div class="sub-box" style="padding:16px;">
+              <h3 style="margin-bottom:6px;">
+                직속기관 소속 센터
+              </h3>
+              <p style="margin-bottom:4px;">
+                • <b>정보화 기능(27.6%)</b> 등의 비중이 상대적으로 높음
+              </p>
+              <p>
+                • 주요 이용 대상 중
+                <b>교직원 비중</b>이 상대적으로 높음
+              </p>
+            </div>
+
+          </div>
+
+          <div class="mint-box">
+            <h3>기관 위상에 따른 역할 분화</h3>
+            <p>
+              본청·지원청은 학생 직접 지원,
+              직속기관은 교직원 및 정보화 인프라 지원 기능 수행
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- =====================================
+       SLIDE 2 : 조직·인력·사무
+       검토의견 반영
+       ===================================== -->
+
+  <div class="slide-container dense">
+
+    <div class="slide-header">
+      <div class="title-group">
+        <h1>
+          지방교육행정기관 소속
+          <span class="accent">센터</span>
+          | 조직·인력·사무
+        </h1>
+        <p class="subtitle-meta">
+          2024년 지방교육행정기관 심층기능진단
+        </p>
+      </div>
+      <span class="badge-tag">02 · 운영 실태 및 쟁점</span>
+    </div>
+
+    <div class="slide-lead">
+      조직·인력 현황조사, 설문조사 및 FGI에서 확인된
+      운영 실태와 주요 쟁점
+    </div>
+
+    <div class="columns-3" style="padding-bottom:18px;">
+
+      <!-- 1열 : 조직 -->
+      <div class="col-card">
+
+        <div class="col-card-header">
+          <span class="num-circle">1</span>
+          <h2>
+            조직
+            <span style="font-weight:500;color:#64748b;font-size:15px;">
+              | 설치 근거와 분장사무
+            </span>
+          </h2>
+        </div>
+
+        <div class="col-card-body">
+
+          <div style="display:flex;flex-direction:column;gap:12px;">
+
+            <div class="sub-box"
+                 style="display:flex;justify-content:space-between;align-items:center;border-left:4px solid var(--teal);">
+              <div>
+                <p style="font-size:14px;font-weight:800;">
+                  직제상 분장사무 명시 비율
+                </p>
+                <p style="font-size:12.5px;color:#64748b;margin-top:2px;">
+                  행정기구 설치조례 시행규칙 기준
+                </p>
+              </div>
+              <p style="font-size:30px;font-weight:800;color:var(--teal-dark);">
+                62.8%
+              </p>
+            </div>
+
+            <div class="sub-box">
+              <h3>분장사무 명시와 책임체계 정비</h3>
+              <p>
+                행정기구 설치조례 시행규칙에 센터의
+                분장사무를 명시하여 권한과 책임을
+                명확히 할 필요가 있음
+              </p>
+            </div>
+
+            <div class="sub-box">
+              <h3>설치 근거와 실제 기능의 정합성</h3>
+              <p>
+                법령·조례·내규 등 설치 근거가 다양하므로,
+                설치 목적과 실제 수행 기능·조직구성의
+                부합 여부를 점검할 필요가 있음
+              </p>
+            </div>
+
+          </div>
+
+          <div class="mint-box">
+            <h3>조직 측면 시사점</h3>
+            <p>
+              설치 근거와 분장사무를 구분해 정비하고,
+              센터의 책임 범위를 구체화
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2열 : 인력 -->
+      <div class="col-card">
+
+        <div class="col-card-header">
+          <span class="num-circle">2</span>
+          <h2>
+            인력
+            <span style="font-weight:500;color:#64748b;font-size:15px;">
+              | 운영 실태와 주요 쟁점
+            </span>
+          </h2>
+        </div>
+
+        <div class="col-card-body">
+
+          <div style="display:flex;flex-direction:column;gap:10px;">
+
+            <div class="sub-box">
+              <h3>
+                <span class="mini-tag actual">실태</span>
+                센터장 배치 방식
+              </h3>
+              <p>
+                조사 대상 법정센터는 모두 센터장을 두고 있으나,
+                비법정센터에서는 미배치 또는 겸임 운영이
+                상대적으로 빈번함
+              </p>
+            </div>
+
+            <div class="sub-box">
+              <h3>
+                <span class="mini-tag actual">실태</span>
+                활용 인력의 다양성
+              </h3>
+              <p>
+                비법정센터는 파견교사·용역인력·자원봉사자·
+                단시간 근로자 등 다양한 형태의 인력을 활용함
+              </p>
+            </div>
+
+            <div class="sub-box">
+              <h3>
+                <span class="mini-tag issue">쟁점</span>
+                전문성 확보의 제약
+              </h3>
+              <p>
+                전문지식·기술의 필요성에 비해
+                교육훈련 기회가 충분하지 않다는 인식이 나타나,
+                직무 전문성 확보가 과제로 제기됨
+              </p>
+            </div>
+
+          </div>
+
+          <div class="mint-box">
+            <h3>향후 인력 운영 방향</h3>
+            <p>
+              센터장 배치 방식, 인력 운영의 안정성,
+              직무 맞춤형 교육훈련을 함께 검토
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 3열 : 사무 -->
+      <div class="col-card">
+
+        <div class="col-card-header">
+          <span class="num-circle">3</span>
+          <h2>
+            사무
+            <span style="font-weight:500;color:#64748b;font-size:15px;">
+              | 기능 정립과 업무 조정
+            </span>
+          </h2>
+        </div>
+
+        <div class="col-card-body">
+
+          <div style="display:flex;flex-direction:column;gap:10px;">
+
+            <div class="sub-box">
+              <h3>
+                <span class="mini-tag issue">논의</span>
+                고유기능에 근거한 역할 정립
+              </h3>
+              <p>
+                센터 업무의 중요성과 과·팀 업무와의
+                차별성이 인식되는 만큼,
+                센터가 전담할 기능과 일반 부서와의
+                역할 경계를 명확히 할 필요가 있음
+              </p>
+            </div>
+
+            <div class="sub-box">
+              <h3>
+                <span class="mini-tag issue">논의</span>
+                업무량·인력배치의 연계 점검
+              </h3>
+              <p>
+                업무량·업무분장의 적정성은 대체로
+                보통 수준으로 인식됨.
+                업무의 양뿐 아니라 기능별 난이도와
+                인력배치의 적합성을 함께 점검할 필요가 있음
+              </p>
+            </div>
+
+            <div class="sub-box">
+              <h3>
+                <span class="mini-tag issue">논의</span>
+                기관 간 역할 분담과 협력체계
+              </h3>
+              <p>
+                부서 내·기관 간 협력 필요성이 높게
+                인식됨에 따라 업무 연계 절차와
+                정보공유·협의체계를 구체화할 필요가 있음
+              </p>
+            </div>
+
+          </div>
+
+          <div class="mint-box">
+            <h3>향후 사무 운영 방향</h3>
+            <p>
+              센터 고유기능 설정 → 업무량·분장 점검 →
+              협력체계 개선으로 연결되는 관리체계 마련
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bottom-banner">
+      센터의 설치 목적·고유기능·인력운영 실태를 연계하여
+      진단하고, 그 결과를 업무 조정에 반영할 필요가 있음
+    </div>
+
+  </div>
+
+
+  <!-- =====================================
+       SLIDE 3 : 개선 방향과 제언
+       검토의견 반영
+       ===================================== -->
+
+  <div class="slide-container">
+
+    <div class="slide-header">
+      <div class="title-group">
+        <h1>
+          지방교육행정기관 소속
+          <span class="accent">센터</span>
+          | 개선 방향과 제언
+        </h1>
+        <p class="subtitle-meta">
+          2024년 지방교육행정기관 심층기능진단
+        </p>
+      </div>
+      <span class="badge-tag">03 · 개선 방향 및 제언</span>
+    </div>
+
+    <div class="slide-lead">
+      개별 센터 운영의 타당성을 기준으로
+      정체성과 효율성을 확립하기 위한 3대 과제
+    </div>
+
+    <div class="columns-3" style="padding-bottom:18px;">
+
+      <!-- 1열 : 조직 운영 -->
+      <div class="col-card">
+
+        <div class="col-card-header">
+          <span class="num-circle">1</span>
+          <h2>조직 운영의 체계화</h2>
+        </div>
+
+        <div class="col-card-body"
+             style="justify-content:flex-start;gap:10px;">
+
+          <div class="item-row">
+            <span class="num-circle" style="width:22px;height:22px;font-size:12px;">1</span>
+            <div class="item-content">
+              <p class="item-title">
+                지역 여건·접근성 기반 규모 설계
+              </p>
+              <p class="item-desc">
+                학생·교원·학교 수, 관할 면적,
+                정책 수요와 이용자 접근성을
+                종합 고려해 설치 규모 판단
+              </p>
+            </div>
+          </div>
+
+          <div class="item-row">
+            <span class="num-circle" style="width:22px;height:22px;font-size:12px;">2</span>
+            <div class="item-content">
+              <p class="item-title">
+                분장사무 명확화 및 기능 전문화
+              </p>
+              <p class="item-desc">
+                시행규칙상 분장사무를 명확히 하고,
+                과·팀과 구별되는 전문 지원기능 및
+                책임 범위 정립
+              </p>
+            </div>
+          </div>
+
+          <div class="item-row">
+            <span class="num-circle" style="width:22px;height:22px;font-size:12px;">3</span>
+            <div class="item-content">
+              <p class="item-title">
+                센터 설치 표준안 마련
+              </p>
+              <p class="item-desc">
+                설치 목적, 기능의 고유성·전문성,
+                서비스 수요의 지속성 등을
+                사전 설치 기준에 반영
+              </p>
+            </div>
+          </div>
+
+          <div class="item-row">
+            <span class="num-circle" style="width:22px;height:22px;font-size:12px;">4</span>
+            <div class="item-content">
+              <p class="item-title">
+                점검·관리 거버넌스 검토
+              </p>
+              <p class="item-desc">
+                교육청 내 총괄부서를 지정하고,
+                필요시 (가칭)센터관리심의위원회
+                운영 검토
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2열 : 인력·업무 -->
+      <div class="col-card">
+
+        <div class="col-card-header">
+          <span class="num-circle">2</span>
+          <h2>인력·업무의 적정화</h2>
+        </div>
+
+        <div class="col-card-body"
+             style="justify-content:flex-start;gap:10px;">
+
+          <div class="item-row">
+            <span class="num-circle" style="width:22px;height:22px;font-size:12px;">1</span>
+            <div class="item-content">
+              <p class="item-title">
+                센터장·전문인력 적정 배치
+              </p>
+              <p class="item-desc">
+                관리 범위·업무 전문성·업무 지속성을
+                고려하여 센터장 배치방식과
+                전문인력 확보 검토
+              </p>
+            </div>
+          </div>
+
+          <div class="item-row">
+            <span class="num-circle" style="width:22px;height:22px;font-size:12px;">2</span>
+            <div class="item-content">
+              <p class="item-title">
+                정원 외 활용인력 운영 점검
+              </p>
+              <p class="item-desc">
+                정원관리와 별도로 활용되는
+                파견·용역·단시간 인력 등의
+                규모·담당업무·운영방식 점검
+              </p>
+            </div>
+          </div>
+
+          <div class="item-row">
+            <span class="num-circle" style="width:22px;height:22px;font-size:12px;">3</span>
+            <div class="item-content">
+              <p class="item-title">
+                합리적 업무분장과 협력
+              </p>
+              <p class="item-desc">
+                센터의 기능·인력 여건에 맞게
+                업무량을 적정화하고,
+                부서·유관기관 간 역할 분담과 협력 강화
+              </p>
+            </div>
+          </div>
+
+          <div class="item-row">
+            <span class="num-circle" style="width:22px;height:22px;font-size:12px;">4</span>
+            <div class="item-content">
+              <p class="item-title">
+                기능 진단·성과 분석과 결과 환류
+              </p>
+              <p class="item-desc">
+                기능 진단으로 역할·중복 여부를 점검하고,
+                성과 분석으로 지원 효과를 확인해
+                조직·인력 조정에 활용
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 3열 : 후속 관리 -->
+      <div class="col-card">
+
+        <div class="col-card-header">
+          <span class="num-circle">3</span>
+          <h2>후속 관리 과제</h2>
+        </div>
+
+        <div class="col-card-body"
+             style="justify-content:flex-start;gap:10px;">
+
+          <div class="item-row">
+            <span class="num-circle" style="width:22px;height:22px;font-size:12px;">1</span>
+            <div class="item-content">
+              <p class="item-title">
+                교육부 차원의 관리기반 정비
+              </p>
+              <p class="item-desc">
+                교육부 주관의 주기적 센터 운영현황
+                조사와 공통 조사기준·관리 방향 제시 검토
+              </p>
+            </div>
+          </div>
+
+          <div class="item-row">
+            <span class="num-circle" style="width:22px;height:22px;font-size:12px;">2</span>
+            <div class="item-content">
+              <p class="item-title">
+                교육청 전담관리 체계·개념 정립
+              </p>
+              <p class="item-desc">
+                교육청 조직·정원 담당 부서에
+                센터 관리 전담인력을 두고,
+                센터의 정의·유형 체계화
+              </p>
+            </div>
+          </div>
+
+          <div class="item-row">
+            <span class="num-circle" style="width:22px;height:22px;font-size:12px;">3</span>
+            <div class="item-content">
+              <p class="item-title">
+                기능 진단 및 직무분석 확대
+              </p>
+              <p class="item-desc">
+                센터별 기능 중복·수요 적합성을
+                진단하고, 주요 직무의 내용·업무량·
+                수행인력 분석 확대
+              </p>
+            </div>
+          </div>
+
+          <div class="item-row">
+            <span class="num-circle" style="width:22px;height:22px;font-size:12px;">4</span>
+            <div class="item-content">
+              <p class="item-title">
+                사업 종료·축소 시 일몰 검토
+              </p>
+              <p class="item-desc">
+                특정 국정과제·교육감 시책에 따라 설치된
+                센터는 사업 종료·기능 대폭 축소 시
+                존치 재검토; 신설 시 평가·일몰 조건 설정 검토
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bottom-banner">
+      센터의 존치·조정은 설치 개수보다
+      기능의 필요성·전문성·지속 수요 및 운영 성과에
+      근거하여 판단할 필요가 있음
+    </div>
+
+  </div>
+
+
+  <!-- =====================================
+       슬라이드 네비게이션
+       ===================================== -->
+
+  <div class="slide-nav">
+    <button id="prevBtn" title="이전 슬라이드">❮</button>
+    <span id="pageNum">1 / 3</span>
+    <button id="nextBtn" title="다음 슬라이드">❯</button>
+    <button id="fsBtn" title="전체화면">⛶</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide-container');
+
+    let cur = Math.max(
+      0,
+      (parseInt(location.hash.replace('#', '')) || 1) - 1
+    );
+
+    function show(idx) {
+      cur = Math.max(0, Math.min(slides.length - 1, idx));
+
+      const scale = Math.min(
+        window.innerWidth / 1280,
+        window.innerHeight / 720
+      );
+
+      slides.forEach((s, i) => {
+        s.style.display = i === cur ? 'flex' : 'none';
+        s.style.transform = `scale(${scale})`;
+        s.style.transformOrigin = 'center center';
+      });
+
+      document.getElementById('pageNum').textContent =
+        `${cur + 1} / ${slides.length}`;
+
+      history.replaceState(null, null, `#${cur + 1}`);
+    }
+
+    document.getElementById('prevBtn').onclick = () => show(cur - 1);
+    document.getElementById('nextBtn').onclick = () => show(cur + 1);
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    document.getElementById('fsBtn').onclick = toggleFullscreen;
+
+    window.addEventListener('keydown', (e) => {
+      if (document.body.contentEditable === 'true') return;
+
+      if (['ArrowRight', 'PageDown', ' '].includes(e.key)) {
+        e.preventDefault();
+        show(cur + 1);
+      }
+
+      if (['ArrowLeft', 'PageUp'].includes(e.key)) {
+        e.preventDefault();
+        show(cur - 1);
+      }
+
+      if (e.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      }
+
+      // E : 화면 편집 모드
+      if (e.key.toLowerCase() === 'e') {
+        const isEdit = document.body.contentEditable === 'true';
+        document.body.contentEditable = !isEdit;
+
+        alert(
+          isEdit
+            ? '편집 모드가 종료되었습니다.'
+            : '화면 편집 모드가 켜졌습니다. 글자를 클릭해 수정할 수 있습니다.'
+        );
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' &&
+          document.body.contentEditable === 'true') {
+        document.body.contentEditable = 'false';
+      }
+    });
+
+    window.addEventListener('resize', () => show(cur));
+
+    window.addEventListener('hashchange', () => {
+      const h = parseInt(location.hash.replace('#', ''));
+      if (h >= 1 && h <= slides.length) {
+        show(h - 1);
+      }
+    });
+
+    // 모바일 터치 이동
+    let touchStartX = 0;
+
+    window.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+
+      if (Math.abs(diff) > 70) {
+        if (diff > 0) show(cur + 1);
+        else show(cur - 1);
+      }
+    }, { passive: true });
+
+    show(cur);
+  </script>
+
+</body>
+</html>
